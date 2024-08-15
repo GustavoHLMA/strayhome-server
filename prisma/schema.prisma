@@ -21,7 +21,65 @@ model UserTest {
   password String
 }
 
-model Test {
+model User {
   id       String  @id @default(uuid())
   name     String
+  phone    String?
+  email    String  @unique
+  password String
+  image    String?
+
+  animals Animal[]
+
+  campaigns Campaign[]
+
+  favoriteAnimals Animal[] @relation("UserFavoriteAnimals")
+
+  favoriteCampaigns Campaign[] @relation("UserFavoriteCampaigns")
+}
+
+model Animal {
+  id      String @id @default(uuid())
+  name    String
+  species String
+  image   String
+  bio     String
+  gender  String
+
+  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId String
+
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
+  campaignId String?
+
+  feed   Feed   @relation(fields: [feedId], references: [id])
+  feedId String
+}
+
+model Campaign {
+  id            String @id @default@(uuid())
+  name        String
+  description String
+  image       String
+
+  creator   User   @relation(fields: [creatorId], references: [id])
+  creatorId String
+
+  feed   Feed   @relation(fields: [feedId], references: [id])
+  feedId String
+}
+
+model Feed {
+  id            String @id @default@(uuid())
+  ownerId String
+  posts   Post[]
+}
+
+model Post {
+  id          String @id @default(uuid())
+  media       String
+  description String
+
+  feed   Feed   @relation(fields: [feedId], references: [id])
+  feedId String
 }
