@@ -29,6 +29,7 @@ model Test {
 model User {
   id            String  @id @default(uuid())
   name          String
+  birthdate     DateTime
   phone         String?
   email         String  @unique
   password      String
@@ -41,6 +42,8 @@ model User {
   favoriteAnimals Animal[] @relation("UserFavoriteAnimals")
 
   favoriteCampaigns Campaign[] @relation("UserFavoriteCampaigns")
+
+  comments      Comment[]
 }
 
 
@@ -95,8 +98,22 @@ model Feed {
 model Post {
   id            String @id @default(uuid())
   media         String
-  description   String
+  description   String?
 
   feed          Feed @relation(fields: [feedId], references: [id])
   feedId        String
+
+  comments  Comment[]
+}
+
+model Comment {
+  id             String @id @default(uuid())
+  content        String
+  createdAt      DateTime @default(now())
+
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String
+
+  post      Post      @relation(fields: [postId], references: [id])
+  postId    String
 }
