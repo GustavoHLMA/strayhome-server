@@ -7,7 +7,7 @@ async function main() {
   const newUser = await prisma.userTest.create({
     data: {
       name: 'John Doe',
-      email: 'john.doe@example.com',
+      email: 'john.doe1@example.com',
       password: 'hashedpassword123',  // Em um ambiente real, hash a senha com bcrypt
     },
   });

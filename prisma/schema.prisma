@@ -14,8 +14,14 @@ datasource db {
 }
 
 model UserTest {
-  id       Int     @id @default(autoincrement())
+  id       String  @id @default(uuid())
   name     String
+  phone    String?
   email    String  @unique
   password String
+}
+
+model Test {
+  id       String  @id @default(uuid())
+  name     String
 }
