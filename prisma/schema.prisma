@@ -25,3 +25,95 @@ model Test {
   id       String  @id @default(uuid())
   name     String
 }
+
+model User {
+  id            String  @id @default(uuid())
+  name          String
+  birthdate     DateTime
+  phone         String?
+  email         String  @unique
+  password      String
+  image         String?
+
+  animals       Animal[]
+
+  campaigns     Campaign[]
+
+  favoriteAnimals Animal[] @relation("UserFavoriteAnimals")
+
+  favoriteCampaigns Campaign[] @relation("UserFavoriteCampaigns")
+
+  comments      Comment[]
+}
+
+
+model Animal {
+  id            String @id @default(uuid())
+  name          String
+  species       String
+  image         String
+  bio           String
+  gender        String
+
+  owner         User @relation(fields: [ownerId], references: [id])
+  ownerId       String
+
+  campaign      Campaign? @relation(fields: [campaignId], references: [id])
+  campaignId    String?
+
+  feed          Feed @relation(fields: [feedId], references: [id])
+  feedId        String @unique
+
+  favoritedBy   User[] @relation("UserFavoriteAnimals")
+}
+
+model Campaign {
+  id            String @id @default(uuid())
+  name          String
+  description   String
+  image         String
+
+  creator       User @relation(fields: [creatorId], references: [id])
+  creatorId     String
+
+  feed          Feed @relation(fields: [feedId], references: [id])
+  feedId        String @unique
+
+  favoritedBy   User[] @relation("UserFavoriteCampaigns")
+
+  animals       Animal[]
+}
+
+model Feed {
+  id            String @id @default(uuid())
+  posts         Post[]
+
+  animal        Animal? 
+  animalId      String?  
+
+  campaign      Campaign?
+  campaignId    String? 
+}
+
+model Post {
+  id            String @id @default(uuid())
+  media         String
+  description   String?
+
+  feed          Feed @relation(fields: [feedId], references: [id])
+  feedId        String
+
+  comments  Comment[]
+}
+
+model Comment {
+  id             String @id @default(uuid())
+  content        String
+  createdAt      DateTime @default(now())
+
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String
+
+  post      Post      @relation(fields: [postId], references: [id])
+  postId    String
+}
