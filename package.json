@@ -1,0 +1,28 @@
+{
+  "name": "strayhome-server",
+  "version": "1.0.0",
+  "description": "A Web3 platform built on the Hedera ecosystem to connect stray animals in need of care with people interested in donating or adopting these pets.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "eslint . --ext .ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hashgraph/sdk": "^2.49.2",
+    "@prisma/client": "^5.18.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.3.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.12.0",
+    "prisma": "^5.18.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.4",
+    "zod": "^3.23.8"
+  }
+}
