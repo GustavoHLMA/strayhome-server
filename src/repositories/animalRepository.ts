@@ -23,6 +23,14 @@ class AnimalRepository {
                     feed: {
                         connect: { id: feed.id },
                     },
+                    
+                },
+            });
+
+            await prisma.feed.update({
+                where: { id: feed.id },
+                data: {
+                    animalId: animal.id,
                 },
             });
     
