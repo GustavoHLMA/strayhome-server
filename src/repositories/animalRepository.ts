@@ -69,8 +69,30 @@ class AnimalRepository {
     }
 
     async delete (id: string): Promise <Animal> {
-        const animal = await prisma.animal.delete({where: {id}})
-        return animal;
+
+        const result = await prisma.$transaction(async (prisma) => {
+
+            const animalExists = await prisma.animal.findUnique({
+                where: { id }
+            })
+
+            if (!animalExists) {
+                throw new Error('Animal já foi deletado ou não existe')
+            }
+
+            const animal = await prisma.animal.delete({
+                where: { id },
+            });
+            
+            
+            await prisma.feed.delete({
+                where: { id: animalExists.id },
+            });
+
+            return animal;
+        });
+    
+        return result;
     }
 
 

@@ -29,11 +29,8 @@ class FeedRepository {
         });
     }
 
-    async delete(id: string): Promise<Feed> {
-        const feed = await prisma.feed.delete({
-            where: { id },
-        });
-
+    async delete (id: string): Promise <Feed> {
+        const feed = await prisma.feed.delete({where: {id}})
         return feed;
     }
 }

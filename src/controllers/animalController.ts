@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AnimalRepository } from '../repositories';
 import { Animal, UpdateAnimal } from '../DTOs';
+import prisma from '../db';
 
 class AnimalController {
 
@@ -89,15 +90,28 @@ class AnimalController {
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
           const { animalId } = req.params;
-    
-          await AnimalRepository.delete(animalId);
-    
-          return res.status(200).json({ message: 'Animal deleted' });
-        } catch (error) {
-          return next(error);
-        }
-    }
 
+          if (!animalId) {
+            return res.status(400).json({ message: 'Animal ID is required' });
+        }
+
+        
+          await prisma.feed.deleteMany({
+            where: { animalId: animalId },
+          });
+
+        
+          const animal = await AnimalRepository.delete(animalId);
+
+          return res.status(200).json({ message: 'Animal and associated feed deleted', data: animal });
+
+
+        } catch (error) {
+            return next(error);
+    }
+    }
 }
+
+
 
 export default new AnimalController();
