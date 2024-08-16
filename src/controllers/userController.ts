@@ -9,14 +9,14 @@ class UserController {
           const userData = User.parse(req.body);
     
     
-          const userTestDataWithHashedPassword = {
+          const userDataWithHashedPassword = {
             ...userData,
             password: await hash(userData.password, 6),
           };
     
-          const userTest = await UserRepository.create(userTestDataWithHashedPassword);
+          const user = await UserRepository.create(userDataWithHashedPassword);
     
-          return res.status(201).json({ message: 'UserTest created', data: userTest });
+          return res.status(201).json({ message: 'User created', data: user });
         } catch (error) {
           return next(error);
         }
