@@ -3,10 +3,12 @@ import userTestRouter from "./UserTestRoutes";
 import userRouter from "./userRoutes";
 import animalRouter from "./animalRoutes";
 import feedRouter from "./feedRoutes";
+import authRouter from "./AuthRoutes";
 
 const router = Router();  
 
 router.use('/userTest', userTestRouter,);
+router.use('/auth', authRouter);
 router.use('/user', userRouter,)
 router.use('/animal', animalRouter)
 router.use('/feed', feedRouter)

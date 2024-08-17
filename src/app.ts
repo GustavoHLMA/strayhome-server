@@ -9,7 +9,4 @@ const app = express();
 app.use(express.json());
 app.use(router);
 
-// Importar e usar suas rotas aqui
-// app.use('/api', yourRoutes);
-
 export default app;
