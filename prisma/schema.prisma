@@ -55,7 +55,7 @@ model Animal {
   campaign      Campaign? @relation(fields: [campaignId], references: [id])
   campaignId    String?
 
-  feed          Feed @relation(fields: [feedId], references: [id])
+  feed          Feed @relation(fields: [feedId], references: [id], onDelete: Cascade)
   feedId        String @unique
 
   favoritedBy   User[] @relation("UserFavoriteAnimals")
