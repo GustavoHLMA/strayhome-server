@@ -1,18 +1,21 @@
-import animalController from "./animalController";
-import feedController from "./feedController";
-import userController from "./userController";
+import AnimalController from "./animalController";
+import FeedController from "./feedController";
+import UserController from "./userController";
 import LoginController from "./LoginController";
 import UserTestController from "./UserTestController";
 import PostController from "./postController";
 import CommentController from "./commentController";
+import CampaingController from "./campaignController";
+
 
 
 export {
   UserTestController,
-  userController,
-  animalController,
-  feedController,
+  UserController,
+  AnimalController,
+  FeedController,
   LoginController,
   PostController,
-  CommentController
+  CommentController,
+  CampaignController
 }
