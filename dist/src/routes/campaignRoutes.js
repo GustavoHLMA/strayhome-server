@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const repositories_1 = require("../repositories");
+const campaignRouter = (0, express_1.Router)();
+campaignRouter.route("/").post(repositories_1.campaignController.create);
+campaignRouter.route("/").get(repositories_1.campaignController.readAll);
+campaignRouter.route("/:id").get(repositories_1.campaignController.read);
+campaignRouter.route("/:id").put(repositories_1.campaignController.update);
+campaignRouter.route("/:id").delete(repositories_1.campaignController.delete);
+exports.default = campaignRouter;

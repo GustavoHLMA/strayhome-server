@@ -4,5 +4,6 @@ import { Feed, UpdateFeed } from "./Feed.DTO";
 import { Post, UpdatePost } from "./Post.DTO";
 import { UpdateUser, User } from "./User.DTO";
 import { UserTest, UpdateUserTest } from "./UserTest";
+import { Campaign, UpdateCampaign } from "./CampaignDTO";
 
-export { UserTest, UpdateUserTest, User, UpdateUser, Animal, UpdateAnimal, Feed, UpdateFeed, Post, UpdatePost, Comment, UpdateComment };
+export { UserTest, UpdateUserTest, User, UpdateUser, Animal, UpdateAnimal, Feed, UpdateFeed, Campaign, UpdateCampaign, Post, UpdatePost, Comment, UpdateComment };

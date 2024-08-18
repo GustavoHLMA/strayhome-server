@@ -6,6 +6,8 @@ import CookieRepository from "./cookieRepository";
 import UserTestRepository from "./userTestRepository";
 import PostRepository from "./postRepository";
 import CommentRepository from "./commentRepository";
+import campaignController from "../controllers/campaignController";
+
 
 
 
@@ -18,4 +20,5 @@ export {
   CookieRepository,
   PostRepository,
   CommentRepository
+  campaignController
 }
