@@ -2,7 +2,7 @@ import { Prisma, Animal } from '@prisma/client';
 import prisma from '../db';
 
 class AnimalRepository {
-    async create(data: { name: string; species: string; image: string; bio: string; gender: string; ownerId: string; }): Promise<Animal> {
+    async create(data: { name: string; species: string; image: string; bio: string; gender: string; ownerId: string; statusAdoption: boolean; }): Promise<Animal> {
         const result = await prisma.$transaction(async (prisma) => {
             
             const feed = await prisma.feed.create({
@@ -17,6 +17,7 @@ class AnimalRepository {
                     image: data.image,
                     bio: data.bio,
                     gender: data.gender,
+                    statusAdoption: data.statusAdoption,
                     owner: {
                         connect: { id: data.ownerId },
                     },
@@ -84,6 +85,9 @@ class AnimalRepository {
                 where: { id },
             });
             
+            await prisma.post.deleteMany({
+                where: { feedId: id },
+            });
             
             await prisma.feed.delete({
                 where: { id: animalExists.id },

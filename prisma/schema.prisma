@@ -48,6 +48,7 @@ model Animal {
   image         String
   bio           String
   gender        String
+  statusAdoption Boolean @default(true)
 
   owner         User @relation(fields: [ownerId], references: [id])
   ownerId       String
@@ -94,7 +95,7 @@ model Post {
   media         String
   description   String?
 
-  feed          Feed @relation(fields: [feedId], references: [id])
+  feed          Feed @relation(fields: [feedId], references: [id], onDelete: Cascade)
   feedId        String
 
   comments  Comment[]
@@ -108,6 +109,6 @@ model Comment {
   author    User      @relation(fields: [authorId], references: [id])
   authorId  String
 
-  post      Post      @relation(fields: [postId], references: [id])
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
 }

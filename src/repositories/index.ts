@@ -4,6 +4,7 @@ import FeedRepository from "./feedRepository";
 import TokenRepository from "./tokenRepository";
 import CookieRepository from "./cookieRepository";
 import UserTestRepository from "./userTestRepository";
+import PostRepository from "./postRepository";
 
 
 
@@ -14,4 +15,5 @@ export {
   FeedRepository,
   TokenRepository,
   CookieRepository,
+  PostRepository
 }
