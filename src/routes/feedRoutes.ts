@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { feedController } from '../controllers';
+import { FeedController } from '../controllers';
 
 const feedRouter = Router();
 
-feedRouter.route("/").get(feedController.readAll);
-feedRouter.route("/:feedId").get(feedController.read);
-feedRouter.route("/:feedId").put(feedController.update);
-feedRouter.route("/:feedId").delete(feedController.delete);
+feedRouter.route("/").get(FeedController.readAll);
+feedRouter.route("/:feedId").get(FeedController.read);
+feedRouter.route("/:feedId").put(FeedController.update);
+feedRouter.route("/:feedId").delete(FeedController.delete);
 
 export default feedRouter;

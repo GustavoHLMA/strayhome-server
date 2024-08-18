@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { animalController } from '../controllers';
+import { AnimalController } from '../controllers';
 
 const animalRouter = Router();
 
-animalRouter.route("/").post(animalController.create);
-animalRouter.route("/").get(animalController.readAll);
-animalRouter.route("/owner/:ownerId").get(animalController.readByOwnerId)
-animalRouter.route("/:animalId").get(animalController.read);
-animalRouter.route("/:animalId").put(animalController.update);
-animalRouter.route("/:animalId").delete(animalController.delete);
+animalRouter.route("/").post(AnimalController.create);
+animalRouter.route("/").get(AnimalController.readAll);
+animalRouter.route("/owner/:ownerId").get(AnimalController.readByOwnerId)
+animalRouter.route("/:animalId").get(AnimalController.read);
+animalRouter.route("/:animalId").put(AnimalController.update);
+animalRouter.route("/:animalId").delete(AnimalController.delete);
 
 export default animalRouter;
