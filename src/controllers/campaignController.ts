@@ -8,6 +8,7 @@ import {
     UpdateCampaign
 } from '../DTOs/CampaignDTO';
 import campaignRepository from '../repositories/campaignRepository';
+import prisma from '../db';
 const {
     ContractExecuteTransaction,
     ContractFunctionParameters,
@@ -72,10 +73,10 @@ class CampaignController {
     async read(req: Request, res: Response, next: NextFunction) {
         try {
             const {
-                id
+                campaignId
             } = req.params;
 
-            const campaign = await campaignRepository.findById(id);
+            const campaign = await campaignRepository.findById(campaignId);
 
             if (!campaign) {
                 return res.status(404).json({
@@ -105,11 +106,11 @@ class CampaignController {
     async update(req: Request, res: Response, next: NextFunction) {
         try {
             const {
-                id
+                campaignId
             } = req.params;
             const campaignData = UpdateCampaign.parse(req.body);
 
-            const updatedCampaign = await campaignRepository.update(id, {
+            const updatedCampaign = await campaignRepository.update(campaignId, {
                 ...campaignData,
                 startDate: campaignData.startDate ? new Date(campaignData.startDate) : undefined,
                 deadline: campaignData.deadline ? new Date(campaignData.deadline) : undefined,
@@ -126,14 +127,17 @@ class CampaignController {
 
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            const {
-                id
-            } = req.params;
-
-            await campaignRepository.delete(id);
-
+            const { campaignId } = req.params;
+    
+            if (!campaignId) {
+                return res.status(400).json({ message: 'Campaign ID is required' });
+            }
+    
+            const deletedCampaign = await campaignRepository.delete(campaignId);
+    
             return res.status(200).json({
-                message: 'Campaign deleted'
+                message: 'Campaign and associated feed and posts deleted',
+                data: deletedCampaign
             });
         } catch (error) {
             return next(error);
