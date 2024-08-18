@@ -5,6 +5,7 @@ import animalRouter from "./animalRoutes";
 import feedRouter from "./feedRoutes";
 import authRouter from "./AuthRoutes";
 import postRouter from "./postRoutes";
+import commentRouter from "./commentRoutes";
 
 const router = Router();  
 
@@ -14,6 +15,7 @@ router.use('/user', userRouter,)
 router.use('/animal', animalRouter)
 router.use('/feed', feedRouter)
 router.use('/post', postRouter)
+router.use('/comment', commentRouter)
 router.route('/').get((_, res) => {
   res.status(200).send('<p style="color:purple">The server is running 🐶🐱</p>');
 });
