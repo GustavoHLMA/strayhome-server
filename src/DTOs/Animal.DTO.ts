@@ -31,7 +31,12 @@ export const Animal = z.object({
             invalid_type_error: 'O ID do dono deve ser uma string',
             required_error: 'O ID do dono é obrigatório'
         })
-        .uuid({ message: 'O ID do dono deve ser um UUID válido' })
+        .uuid({ message: 'O ID do dono deve ser um UUID válido' }),
+    statusAdoption: z
+        .boolean({
+            invalid_type_error: 'O status de adoção deve ser um booleano',
+            required_error: 'O status de adoção é obrigatório'
+        }) 
 
 })
 

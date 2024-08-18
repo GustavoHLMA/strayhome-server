@@ -4,7 +4,10 @@ import FeedRepository from "./feedRepository";
 import TokenRepository from "./tokenRepository";
 import CookieRepository from "./cookieRepository";
 import UserTestRepository from "./userTestRepository";
+import PostRepository from "./postRepository";
+import CommentRepository from "./commentRepository";
 import campaignController from "../controllers/campaignController";
+
 
 
 
@@ -15,5 +18,7 @@ export {
   FeedRepository,
   TokenRepository,
   CookieRepository,
+  PostRepository,
+  CommentRepository
   campaignController
 }
