@@ -17,6 +17,7 @@ class AnimalRepository {
                     image: data.image,
                     bio: data.bio,
                     gender: data.gender,
+                    statusAdoption: data.statusAdoption,
                     owner: {
                         connect: { id: data.ownerId },
                     },
@@ -69,6 +70,9 @@ class AnimalRepository {
             }
             const animal = await prisma.animal.delete({
                 where: { id },
+            });
+            await prisma.post.deleteMany({
+                where: { feedId: id },
             });
             await prisma.feed.delete({
                 where: { id: animalExists.id },
