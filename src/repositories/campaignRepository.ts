@@ -10,31 +10,41 @@ class CampaignRepository {
         startDate: Date;
         deadline: Date;
         creatorId: string;
-        feedId: string;
         campaignIdOnBlockchain: string;
     }): Promise<CampaignModel> {
-        const campaign = await prisma.campaign.create({
-            data: {
-                name: data.name,
-                description: data.description,
-                image: data.image,
-                target: data.target,
-                startDate: data.startDate,
-                deadline: data.deadline,
-                campaignIdOnBlockchain: data.campaignIdOnBlockchain,
-                creator: {
-                    connect: { id: data.creatorId },
+        const result = await prisma.$transaction(async (prisma) => {
+            // Cria o feed associado à campanha
+            const feed = await prisma.feed.create({
+                data: {},
+            });
+
+            // Cria a campanha associada ao feed recém-criado
+            const campaign = await prisma.campaign.create({
+                data: {
+                    name: data.name,
+                    description: data.description,
+                    image: data.image,
+                    target: data.target,
+                    startDate: data.startDate,
+                    deadline: data.deadline,
+                    campaignIdOnBlockchain: data.campaignIdOnBlockchain,
+                    creator: {
+                        connect: { id: data.creatorId },
+                    },
+                    feed: {
+                        connect: { id: feed.id },
+                    },
                 },
-                feed: {
-                    connect: { id: data.feedId },
-                },
-            },
+            });
+
+            return campaign;
         });
-        return campaign;
+
+        return result;
     }
 
     async findById(id: string): Promise<CampaignModel | null> {
-        const campaign = await prisma.campaign.findUnique({ 
+        const campaign = await prisma.campaign.findUnique({
             where: { id },
             include: {
                 creator: true,

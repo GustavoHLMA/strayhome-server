@@ -43,12 +43,6 @@ export const Campaign = z.object({
             required_error: 'O ID do criador é obrigatório'
         })
         .uuid({ message: 'O ID do criador deve ser um UUID válido' }),
-    feedId: z
-        .string({
-            invalid_type_error: 'O ID do feed deve ser uma string',
-            required_error: 'O ID do feed é obrigatório'
-        })
-        .uuid({ message: 'O ID do feed deve ser um UUID válido' }),
     campaignIdOnBlockchain: z
         .string()
         .optional(),  // Adicionado como opcional
