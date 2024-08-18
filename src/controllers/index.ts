@@ -5,7 +5,7 @@ import LoginController from "./LoginController";
 import UserTestController from "./UserTestController";
 import PostController from "./postController";
 import CommentController from "./commentController";
-import CampaingController from "./campaignController";
+import CampaignController from "./campaignController";
 
 
 
