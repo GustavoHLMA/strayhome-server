@@ -69,7 +69,7 @@ model Campaign {
   creator         User     @relation(fields: [creatorId], references: [id]) 
   creatorId       String
   
-  feed            Feed     @relation(fields: [feedId], references: [id])   
+  feed            Feed     @relation(fields: [feedId], references: [id], onDelete: Cascade)   
   feedId          String   @unique
 
   favoritedBy     User[]   @relation("UserFavoriteCampaigns") 
