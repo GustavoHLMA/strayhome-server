@@ -24,7 +24,7 @@ router.use('/feed', feedRouter);
 router.use('/campaign', campaignRouter);  
 
 router.route('/').get((_, res) => {
-  res.status(200).send('<p style="color:purple">The server is running 🐶🐱</p>');
+  res.status(200).send('The server is running');
 });
 
 export default router;
