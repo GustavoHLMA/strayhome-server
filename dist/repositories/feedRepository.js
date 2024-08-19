@@ -16,7 +16,9 @@ class FeedRepository {
         const feed = await db_1.default.feed.findUnique({
             where: { id },
             include: {
-                posts: true
+                posts: true,
+                animal: true,
+                campaign: true
             }
         });
         return feed;

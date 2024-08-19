@@ -20,6 +20,7 @@ class AnimalController {
                 bio: animalData.bio,
                 gender: animalData.gender,
                 ownerId: animalData.ownerId,
+                statusAdoption: animalData.statusAdoption,
             });
             return res.status(201).json({ message: 'Animal created', data: createdAnimal });
         }

@@ -30,14 +30,15 @@ class CampaignController {
                 .setMaxTransactionFee(new Hbar(2));
             // Executa a transação
             const txResponse = await transaction.execute(hederaClient);
+            // Obtenha o transactionId diretamente da resposta da transação
+            const transactionId = txResponse.transactionId;
+            const campaignIdOnBlockchain = transactionId.toString();
             const receipt = await txResponse.getReceipt(hederaClient);
             console.log(receipt); // Inspecione o receipt aqui
             if (receipt.status.toString() !== "SUCCESS") {
                 throw new Error("Failed to create campaign on Hedera");
             }
-            // Acesse o contractId e converta-o para string
-            const contractIdOnBlockchain = receipt.contractId.toString();
-            const campaign = await campaignRepository_1.default.create(Object.assign(Object.assign({}, campaignData), { startDate: new Date(campaignData.startDate), deadline: new Date(campaignData.deadline), campaignIdOnBlockchain: contractIdOnBlockchain }));
+            const campaign = await campaignRepository_1.default.create(Object.assign(Object.assign({}, campaignData), { startDate: new Date(campaignData.startDate), deadline: new Date(campaignData.deadline), campaignIdOnBlockchain }));
             return res.status(201).json({ message: 'Campaign created', data: campaign });
         }
         catch (error) {
