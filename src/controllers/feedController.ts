@@ -49,7 +49,7 @@ class FeedController {
     
           await FeedRepository.delete(feedId);
     
-          return res.status(200).json({ message: 'Feed and animal deleted' });
+          return res.status(200).json({ message: 'Feed and owner deleted' });
         } catch (error) {
           return next(error);
         }
