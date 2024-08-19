@@ -79,10 +79,10 @@ class CampaignRepository {
         const campaign = await prisma.campaign.update({
             where: { id },
             data,
-        });
+        }); 
         return campaign;
     }
-
+    
     async delete(id: string): Promise<CampaignModel> {
         const result = await prisma.$transaction(async (prisma) => {
             
