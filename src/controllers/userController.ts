@@ -38,6 +38,24 @@ class UserController {
         }
     }
 
+    async readByEmail(req: Request, res: Response, next: NextFunction) {
+      try {
+        const { userEmail } = req.params;
+
+        const user = await UserRepository.findByEmail(userEmail)
+
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+
+
+        return res.status(200).json({ data: user });
+
+      } catch (error) {
+          return next(error);
+      }
+    }
+
     async readAll(req: Request, res: Response, next: NextFunction) {
         try {
           const users = await UserRepository.findAll();
