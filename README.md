@@ -17,10 +17,8 @@ Strayhome is a platform on the Hedera network that enables users to create and p
   
 ## Deploy 🔗
 
-- [API url](https://strayhome-server.onrender.com/)
+- [API url](https://strayhome-server.onrender.com/) (Expect about 50s of delay on first API call due to downtime)
 - [Website](https://strayhome-client.vercel.app/landing)
-  
-
 ## Documentation  📄
 
 - [Client Repositoty](https://github.com/GustavoHLMA/strayhome-client)
