@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const repositories_1 = require("../repositories");
+const controllers_1 = require("../controllers");
 const campaignRouter = (0, express_1.Router)();
-campaignRouter.route("/").post(repositories_1.CampaignController.create);
-campaignRouter.route("/").get(repositories_1.CampaignController.readAll);
-campaignRouter.route("/:id").get(repositories_1.CampaignController.read);
-campaignRouter.route("/:id").put(repositories_1.CampaignController.update);
-campaignRouter.route("/:id").delete(repositories_1.CampaignController.delete);
+campaignRouter.route("/").post(controllers_1.CampaignController.create);
+campaignRouter.route("/").get(controllers_1.CampaignController.readAll);
+campaignRouter.route("/:campaignId").get(controllers_1.CampaignController.read);
+campaignRouter.route("/:campaignId").put(controllers_1.CampaignController.update);
+campaignRouter.route("/:campaignId").delete(controllers_1.CampaignController.delete);
+campaignRouter.route("/:campaignId/donate").post(controllers_1.CampaignController.donate);
 exports.default = campaignRouter;

@@ -40,7 +40,7 @@ class FeedController {
         try {
             const { feedId } = req.params;
             await repositories_1.FeedRepository.delete(feedId);
-            return res.status(200).json({ message: 'Feed and animal deleted' });
+            return res.status(200).json({ message: 'Feed and owner deleted' });
         }
         catch (error) {
             return next(error);

@@ -28,6 +28,19 @@ class UserController {
             return next(error);
         }
     }
+    async readByEmail(req, res, next) {
+        try {
+            const { userEmail } = req.params;
+            const user = await repositories_1.UserRepository.findByEmail(userEmail);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            return res.status(200).json({ data: user });
+        }
+        catch (error) {
+            return next(error);
+        }
+    }
     async readAll(req, res, next) {
         try {
             const users = await repositories_1.UserRepository.findAll();

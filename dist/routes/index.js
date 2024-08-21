@@ -25,6 +25,6 @@ router.use('/animal', animalRoutes_1.default);
 router.use('/feed', feedRoutes_1.default);
 router.use('/campaign', campaignRoutes_1.default);
 router.route('/').get((_, res) => {
-    res.status(200).send('<p style="color:purple">The server is running 🐶🐱</p>');
+    res.status(200).send('The server is running');
 });
 exports.default = router;

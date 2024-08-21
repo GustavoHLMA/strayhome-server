@@ -17,26 +17,26 @@ class LoginController {
     async login(req, res, next) {
         try {
             const { email, password } = req.body;
-            const userTest = await repositories_1.UserTestRepository.findByEmail(email);
-            if (!userTest) {
+            const user = await repositories_1.UserRepository.findByEmail(email);
+            if (!user) {
                 return res.status(400).json({
                     message: 'Invalid credentials.',
                 });
             }
-            const checkPassword = await (0, bcryptjs_1.compare)(password, userTest.password);
+            const checkPassword = await (0, bcryptjs_1.compare)(password, user.password);
             if (!checkPassword) {
                 return res.status(400).json({
                     message: 'Invalid credentials.',
                 });
             }
-            const accessToken = repositories_1.TokenRepository.generateAccessToken(userTest.id, '60s');
-            const refreshToken = repositories_1.TokenRepository.generateRefreshToken(userTest.id, '5d');
+            const accessToken = repositories_1.TokenRepository.generateAccessToken(user.id, '60s');
+            const refreshToken = repositories_1.TokenRepository.generateRefreshToken(user.id, '5d');
             repositories_1.CookieRepository.setCookie(res, 'refresh_token', refreshToken);
-            const { password: _ } = userTest, loggedUserTest = __rest(userTest, ["password"]);
+            const { password: _ } = user, loggedUser = __rest(user, ["password"]);
             return res.status(200).json({
-                message: 'UserTest logged',
+                message: 'User logged',
                 data: {
-                    loggedUserTest,
+                    loggedUser,
                     accessToken,
                 },
             });
@@ -61,17 +61,17 @@ class LoginController {
                     message: 'Invalid token',
                 });
             }
-            const userTest = await repositories_1.UserTestRepository.findById(decodedRefreshToken.id);
-            if (!userTest) {
+            const user = await repositories_1.UserRepository.findById(decodedRefreshToken.id);
+            if (!user) {
                 return res.status(400).json({
-                    message: 'UserTest not found',
+                    message: 'User not found',
                 });
             }
             repositories_1.CookieRepository.clearCookies(res, 'refresh_token');
-            const newRefreshToken = repositories_1.TokenRepository.generateRefreshToken(userTest.id, '1d');
-            const accessToken = repositories_1.TokenRepository.generateAccessToken(userTest.id, '30s');
+            const newRefreshToken = repositories_1.TokenRepository.generateRefreshToken(user.id, '1d');
+            const accessToken = repositories_1.TokenRepository.generateAccessToken(user.id, '30s');
             repositories_1.CookieRepository.setCookie(res, 'refresh_token', newRefreshToken);
-            const { password: _ } = userTest, loggedUser = __rest(userTest, ["password"]);
+            const { password: _ } = user, loggedUser = __rest(user, ["password"]);
             return res.status(200).json({
                 message: 'Token refreshed',
                 data: {

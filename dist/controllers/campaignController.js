@@ -47,16 +47,12 @@ class CampaignController {
     }
     async read(req, res, next) {
         try {
-            const { id } = req.params;
-            const campaign = await campaignRepository_1.default.findById(id);
+            const { campaignId } = req.params;
+            const campaign = await campaignRepository_1.default.findById(campaignId);
             if (!campaign) {
-                return res.status(404).json({
-                    message: 'Campaign not found'
-                });
+                return res.status(404).json({ message: 'Campaign not found' });
             }
-            return res.status(200).json({
-                data: campaign
-            });
+            return res.status(200).json({ data: campaign });
         }
         catch (error) {
             return next(error);
@@ -65,9 +61,7 @@ class CampaignController {
     async readAll(req, res, next) {
         try {
             const campaigns = await campaignRepository_1.default.findAll();
-            return res.status(200).json({
-                data: campaigns
-            });
+            return res.status(200).json({ data: campaigns });
         }
         catch (error) {
             return next(error);
@@ -75,13 +69,10 @@ class CampaignController {
     }
     async update(req, res, next) {
         try {
-            const { id } = req.params;
+            const { campaignId } = req.params;
             const campaignData = CampaignDTO_1.UpdateCampaign.parse(req.body);
-            const updatedCampaign = await campaignRepository_1.default.update(id, Object.assign(Object.assign({}, campaignData), { startDate: campaignData.startDate ? new Date(campaignData.startDate) : undefined, deadline: campaignData.deadline ? new Date(campaignData.deadline) : undefined }));
-            return res.status(200).json({
-                message: 'Campaign updated',
-                data: updatedCampaign
-            });
+            const updatedCampaign = await campaignRepository_1.default.update(campaignId, Object.assign(Object.assign({}, campaignData), { startDate: campaignData.startDate ? new Date(campaignData.startDate) : undefined, deadline: campaignData.deadline ? new Date(campaignData.deadline) : undefined }));
+            return res.status(200).json({ message: 'Campaign updated', data: updatedCampaign });
         }
         catch (error) {
             return next(error);
@@ -89,10 +80,58 @@ class CampaignController {
     }
     async delete(req, res, next) {
         try {
-            const { id } = req.params;
-            await campaignRepository_1.default.delete(id);
+            const { campaignId } = req.params;
+            if (!campaignId) {
+                return res.status(400).json({ message: 'Campaign ID is required' });
+            }
+            const deletedCampaign = await campaignRepository_1.default.delete(campaignId);
             return res.status(200).json({
-                message: 'Campaign deleted'
+                message: 'Campaign and associated feed and posts deleted',
+                data: deletedCampaign
+            });
+        }
+        catch (error) {
+            return next(error);
+        }
+    }
+    async donate(req, res, next) {
+        try {
+            const { campaignId } = req.params;
+            const { amount } = req.body;
+            if (!amount || amount <= 0) {
+                return res.status(400).json({ message: 'Invalid donation amount' });
+            }
+            console.log('Amount received:', amount); // Adicione isso para depuração
+            const campaign = await campaignRepository_1.default.findById(campaignId);
+            if (!campaign) {
+                return res.status(404).json({ message: 'Campaign not found' });
+            }
+            const contractId = process.env.CONTRACT_ID;
+            if (!contractId) {
+                throw new Error("CONTRACT_ID is not defined");
+            }
+            // Extrai a parte numérica do ID da campanha
+            const campaignIdNumericPart = parseInt(campaign.campaignIdOnBlockchain.split('.')[2].split('@')[0], 10);
+            const transaction = new ContractExecuteTransaction()
+                .setContractId(contractId)
+                .setGas(300000)
+                .setFunction("donateToCampaign", new ContractFunctionParameters()
+                .addUint256(campaignIdNumericPart))
+                .setPayableAmount(new Hbar(amount)) // Passando o amount diretamente como Hbar
+                .setMaxTransactionFee(new Hbar(2));
+            const txResponse = await transaction.execute(hederaClient);
+            const receipt = await txResponse.getReceipt(hederaClient);
+            if (receipt.status.toString() !== "SUCCESS") {
+                throw new Error("Donation failed on Hedera");
+            }
+            const updatedCampaign = await campaignRepository_1.default.update(campaignId, {
+                amountCollected: {
+                    increment: amount
+                }
+            });
+            return res.status(200).json({
+                message: 'Donation successful',
+                data: updatedCampaign
             });
         }
         catch (error) {

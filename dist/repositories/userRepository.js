@@ -20,6 +20,10 @@ class UserRepository {
             }, });
         return user;
     }
+    async findByEmail(email) {
+        const user = await db_1.default.user.findUnique({ where: { email } });
+        return user;
+    }
     async findAll() {
         const users = await db_1.default.user.findMany();
         return users;
