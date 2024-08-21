@@ -25,8 +25,8 @@ Strayhome is a platform on the Hedera network that enables users to create and p
 
 - [Client Repositoty](https://github.com/GustavoHLMA/strayhome-client)
 - [Figma](https://www.figma.com/design/sDOP7ncuIZeeqvSNILMYeK/Stray-home?node-id=4-3&t=w6MSIkVca5BU0QeQ-0)
-- [Pitch deck](https://www.youtube.com/watch?v=BHHm5CXXktA)
-- [Prototype video](https://drive.google.com/file/d/1hvJq77fcZRwrtQO8SlzbOKq8-MKG7Q6y/view)
+- [Pitch deck](https://drive.google.com/file/d/1hvJq77fcZRwrtQO8SlzbOKq8-MKG7Q6y/view)
+- [Prototype video](https://www.youtube.com/watch?v=BHHm5CXXktA)
 
 
 
