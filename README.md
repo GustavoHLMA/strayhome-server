@@ -46,9 +46,10 @@ Strayhome is a platform on the Hedera network that enables users to create and p
 ## Installing ⬇️
 
 ```bash
-- git clone https://github.com/GustavoHLMA/strayhome-client.git
-- cd strayhome-client
+- git clone https://github.com/GustavoHLMA/strayhome-server.git
+- cd strayhome-server
 - npm install
+- prisma migrate dev
 ```
 
   
@@ -60,6 +61,6 @@ Strayhome is a platform on the Hedera network that enables users to create and p
   
 
 ```bash
-- cd strayhome-client
+- cd strayhome-server
 - npm run dev
 ```
